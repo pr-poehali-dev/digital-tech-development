@@ -26,10 +26,18 @@ const slides = [
   { num: 2, title: 'KPI-показатели', desc: 'Ключевые цифры' },
   { num: 3, title: 'Динамика НИОКР', desc: 'Расходы по годам' },
   { num: 4, title: 'Активность',     desc: 'Предприятия' },
-  { num: 5, title: 'ИИ & BigData',   desc: '256,1 млрд руб.' },
+  { num: 5, title: 'Приоритеты',     desc: 'Сравнение направлений' },
+  { num: 6, title: 'ИИ & BigData',   desc: '256,1 млрд руб.' },
 ];
 
 const SOURCE = 'Российский статистический ежегодник. 2025';
+
+const prioritiesData = [
+  { label: 'Цифровые, ИИ, BigData, ML', value: 256.1, highlight: true },
+  { label: 'Транспорт и телеком-системы', value: 102.2, highlight: false },
+  { label: 'Персонализированная медицина', value: 80.9, highlight: false },
+  { label: 'Экологичная энергетика', value: 69.5, highlight: false },
+];
 
 // ── Светлая палитра
 const C = {
@@ -122,7 +130,7 @@ export default function Index() {
         {/* ── КАРТОЧКИ СЛАЙДОВ ── */}
         <div style={{ marginBottom: 32 }}>
           <div style={{ fontSize: 11, color: C.muted, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 12 }}>
-            Структура презентации · 5 слайдов
+            Структура презентации · 6 слайдов
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             {slides.map(sl => (
@@ -274,6 +282,75 @@ export default function Index() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* ── ДИАГРАММА ПРИОРИТЕТОВ ── */}
+        <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '24px 26px', marginBottom: 14, boxShadow: '0 2px 8px rgba(0,80,140,0.07)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
+            <div>
+              <div style={{ fontSize: 10, color: C.cyan, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 4 }}>
+                Технологические приоритеты · 2024
+              </div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: C.text }}>
+                Цифровые технологии — главный приоритет
+              </div>
+            </div>
+            <div style={{ background: C.badge, border: `1px solid ${C.border}`, borderRadius: 8, padding: '6px 14px', fontSize: 11, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+              млрд руб.
+            </div>
+          </div>
+
+          {/* Столбчатая диаграмма */}
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 18, height: 200, marginBottom: 16 }}>
+            {prioritiesData.map((item, i) => {
+              const maxVal = 256.1;
+              const barH = Math.round((item.value / maxVal) * 180);
+              return (
+                <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: 6 }}>
+                  <div style={{ fontSize: 12, fontWeight: 800, color: item.highlight ? C.text : C.muted }}>
+                    {item.value}
+                  </div>
+                  <div style={{
+                    width: '100%', height: barH,
+                    background: item.highlight
+                      ? `linear-gradient(180deg, ${C.cyan} 0%, #009DC8 100%)`
+                      : C.barTrack,
+                    borderRadius: '6px 6px 0 0',
+                    border: item.highlight ? 'none' : `1px solid ${C.border}`,
+                    position: 'relative' as const,
+                    boxShadow: item.highlight ? '0 4px 16px rgba(0,119,168,0.25)' : 'none',
+                    transition: 'opacity 0.2s',
+                  }}>
+                    {item.highlight && (
+                      <div style={{
+                        position: 'absolute' as const, top: 6, left: 0, right: 0,
+                        textAlign: 'center' as const, fontSize: 9, fontWeight: 700, color: '#fff',
+                        letterSpacing: '0.08em',
+                      }}>
+                        №1
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Подписи под столбцами */}
+          <div style={{ display: 'flex', gap: 18 }}>
+            {prioritiesData.map((item, i) => (
+              <div key={i} style={{ flex: 1, textAlign: 'center' as const }}>
+                <div style={{ fontSize: 9, color: item.highlight ? C.cyan : C.muted, fontWeight: item.highlight ? 700 : 400, lineHeight: 1.3, fontFamily: "'IBM Plex Sans', sans-serif" }}>
+                  {item.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Вывод */}
+          <div style={{ marginTop: 18, padding: '10px 16px', background: C.badge, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 11, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif", lineHeight: 1.5 }}>
+            Цифровое направление опережает ближайшего конкурента (транспорт и телеком) в <span style={{ fontWeight: 700, color: C.cyan }}>2,5 раза</span> и заметно опережает большинство остальных приоритетов.
           </div>
         </div>
 

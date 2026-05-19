@@ -85,7 +85,7 @@ export async function generatePresentation(): Promise<void> {
   pptx.author = 'Аналитический обзор';
   pptx.title = 'Развитие цифровых технологий в России';
 
-  const TOTAL = 5;
+  const TOTAL = 6;
 
   // ────────────────────────────────────────────────
   // СЛАЙД 1 — Титульный
@@ -297,7 +297,85 @@ export async function generatePresentation(): Promise<void> {
   }
 
   // ────────────────────────────────────────────────
-  // СЛАЙД 5 — Цифровой приоритет / ИИ
+  // СЛАЙД 5 — Сравнение технологических приоритетов
+  // ────────────────────────────────────────────────
+  {
+    const s = pptx.addSlide();
+    addSlideBackground(s, 'Цифровые технологии — главный приоритет', 'Сравнение объёмов финансирования по направлениям · 2024');
+
+    const priorities = [
+      { label: 'Цифровые,\nИИ, BigData, ML', value: 256.1, highlight: true },
+      { label: 'Транспорт и\nтелеком-системы', value: 102.2, highlight: false },
+      { label: 'Персонализированная\nмедицина', value: 80.9, highlight: false },
+      { label: 'Экологичная\nэнергетика', value: 69.5, highlight: false },
+    ];
+    const maxVal = 256.1;
+
+    // Фон секции с диаграммой
+    s.addShape('rect', { x: 0.35, y: 1.3, w: 12.65, h: 4.9, fill: { color: BG_CARD }, line: { color: BORDER, width: 0.5 }, rectRadius: 0.1 });
+
+    // Столбцы диаграммы
+    const colW = 2.5;
+    const colGap = 0.65;
+    const chartBottom = 5.6;
+    const maxBarH = 3.2;
+    const startX = 0.9;
+
+    priorities.forEach((p, i) => {
+      const barH = (p.value / maxVal) * maxBarH;
+      const bx = startX + i * (colW + colGap);
+      const by = chartBottom - barH;
+
+      // Столбец
+      s.addShape('rect', {
+        x: bx, y: by, w: colW, h: barH,
+        fill: { color: p.highlight ? CYAN : BAR_TRACK },
+        line: { color: p.highlight ? CYAN : BORDER, width: 0.5 },
+        rectRadius: 0.06,
+      });
+
+      // Метка №1 внутри выделенного столбца
+      if (p.highlight) {
+        s.addText('№ 1', {
+          x: bx, y: by + 0.15, w: colW, h: 0.35,
+          fontSize: 12, bold: true, color: WHITE, fontFace: 'Calibri', align: 'center',
+        });
+      }
+
+      // Значение над столбцом
+      s.addText(`${p.value} млрд`, {
+        x: bx - 0.1, y: by - 0.38, w: colW + 0.2, h: 0.32,
+        fontSize: p.highlight ? 13 : 10,
+        bold: p.highlight,
+        color: p.highlight ? TEXT : MUTED,
+        fontFace: 'Calibri', align: 'center',
+      });
+
+      // Подпись под столбцом
+      s.addText(p.label, {
+        x: bx - 0.1, y: chartBottom + 0.12, w: colW + 0.2, h: 0.55,
+        fontSize: 9,
+        bold: p.highlight,
+        color: p.highlight ? CYAN : MUTED,
+        fontFace: 'Calibri', align: 'center', wrap: true,
+      });
+    });
+
+    // Горизонтальная ось
+    s.addShape('rect', { x: 0.7, y: chartBottom, w: 12.0, h: 0.03, fill: { color: BORDER } });
+
+    // Вывод-комментарий
+    s.addShape('rect', { x: 0.35, y: 6.55, w: 12.65, h: 0.42, fill: { color: BG_BADGE }, line: { color: BORDER, width: 0.5 }, rectRadius: 0.07 });
+    s.addText('Цифровое направление опережает ближайшего конкурента (транспорт и телеком) в 2,5 раза и занимает лидирующее место среди всех приоритетов.', {
+      x: 0.55, y: 6.58, w: 12.3, h: 0.35,
+      fontSize: 9, color: MUTED, fontFace: 'Calibri', align: 'left',
+    });
+
+    addFooter(s, 5, TOTAL);
+  }
+
+  // ────────────────────────────────────────────────
+  // СЛАЙД 6 — Цифровой приоритет / ИИ
   // ────────────────────────────────────────────────
   {
     const s = pptx.addSlide();
@@ -370,7 +448,7 @@ export async function generatePresentation(): Promise<void> {
     s.addShape('rect', { x: 0, y: 7.1, w: '100%', h: 0.4, fill: { color: BG_CARD } });
     s.addShape('rect', { x: 0, y: 7.1, w: '100%', h: 0.03, fill: { color: BORDER } });
     s.addText(SOURCE_TEXT, { x: 0.3, y: 7.14, w: 9, h: 0.28, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'left' });
-    s.addText('5 / 5', { x: 12.5, y: 7.14, w: 0.7, h: 0.28, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'right' });
+    s.addText('6 / 6', { x: 12.5, y: 7.14, w: 0.7, h: 0.28, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'right' });
   }
 
   await pptx.writeFile({ fileName: 'Цифровые-технологии-Россия-2024.pptx' });
