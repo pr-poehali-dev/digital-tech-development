@@ -85,7 +85,7 @@ export async function generatePresentation(): Promise<void> {
   pptx.author = 'Аналитический обзор';
   pptx.title = 'Развитие цифровых технологий в России';
 
-  const TOTAL = 6;
+  const TOTAL = 9;
 
   // ────────────────────────────────────────────────
   // СЛАЙД 1 — Титульный
@@ -448,7 +448,151 @@ export async function generatePresentation(): Promise<void> {
     s.addShape('rect', { x: 0, y: 7.1, w: '100%', h: 0.4, fill: { color: BG_CARD } });
     s.addShape('rect', { x: 0, y: 7.1, w: '100%', h: 0.03, fill: { color: BORDER } });
     s.addText(SOURCE_TEXT, { x: 0.3, y: 7.14, w: 9, h: 0.28, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'left' });
-    s.addText('6 / 6', { x: 12.5, y: 7.14, w: 0.7, h: 0.28, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'right' });
+    s.addText('6 / 9', { x: 12.5, y: 7.14, w: 0.7, h: 0.28, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'right' });
+  }
+
+  // ────────────────────────────────────────────────
+  // СЛАЙД 7 — Прогноз ИИ и IoT до 2030
+  // ────────────────────────────────────────────────
+  {
+    const s = pptx.addSlide();
+    addSlideBackground(s, 'Рынок ИИ и IoT в России: прогноз роста до 2030 года', 'Показать будущую динамику цифровизации и лидеров рынка · Среднегодовой рост ~45% в 2025–2027 гг.');
+
+    // Блок с графиком (горизонтальные бары — аналог линейного)
+    s.addShape('rect', { x: 0.35, y: 1.3, w: 7.8, h: 5.4, fill: { color: BG_CARD }, line: { color: BORDER, width: 0.5 }, rectRadius: 0.1 });
+    s.addShape('rect', { x: 0.35, y: 1.3, w: 7.8, h: 0.06, fill: { color: CYAN }, rectRadius: 0.04 });
+    s.addText('Прогноз объёма рынка, млрд руб.', { x: 0.55, y: 1.45, w: 7.4, h: 0.4, fontSize: 11, bold: true, color: TEXT, fontFace: 'Calibri' });
+
+    const forecast = [
+      { year: '2025', value: 170.3 },
+      { year: '2026', value: 247 },
+      { year: '2027', value: 358 },
+      { year: '2030', value: 1000 },
+    ];
+    const maxFV = 1000;
+    forecast.forEach((f, i) => {
+      const isLast = i === 3;
+      const ry = 2.0 + i * 1.1;
+      const barW = 6.0 * (f.value / maxFV);
+      s.addText(f.year, { x: 0.55, y: ry, w: 0.7, h: 0.3, fontSize: 11, bold: true, color: isLast ? TEAL : MUTED, fontFace: 'Calibri' });
+      s.addShape('rect', { x: 1.3, y: ry + 0.05, w: 6.0, h: 0.24, fill: { color: BAR_TRACK }, rectRadius: 0.05 });
+      s.addShape('rect', { x: 1.3, y: ry + 0.05, w: barW, h: 0.24, fill: { color: isLast ? TEAL : CYAN }, rectRadius: 0.05 });
+      s.addText(isLast ? '>1 000 млрд' : `${f.value} млрд`, {
+        x: 1.35, y: ry + 0.04, w: barW > 0.8 ? barW - 0.1 : 1.5, h: 0.24,
+        fontSize: 8.5, bold: true, color: barW > 0.8 ? WHITE : TEXT, fontFace: 'Calibri', align: barW > 0.8 ? 'right' : 'left',
+      });
+      if (i < 3) {
+        const pct = i === 0 ? '+45%' : i === 1 ? '+45%' : '+45%/год';
+        s.addText(pct, { x: 7.4, y: ry, w: 0.65, h: 0.32, fontSize: 9, bold: true, color: CYAN, fontFace: 'Calibri', align: 'right' });
+      }
+    });
+
+    // Карточки компаний
+    s.addShape('rect', { x: 8.5, y: 1.3, w: 4.8, h: 5.4, fill: { color: BG_CARD }, line: { color: BORDER, width: 0.5 }, rectRadius: 0.1 });
+    s.addShape('rect', { x: 8.5, y: 1.3, w: 4.8, h: 0.06, fill: { color: TEAL }, rectRadius: 0.04 });
+    s.addText('Лидеры рынка', { x: 8.7, y: 1.45, w: 4.4, h: 0.35, fontSize: 11, bold: true, color: TEXT, fontFace: 'Calibri' });
+
+    const companies = [
+      { name: 'Яндекс', desc: 'Платформы для умных устройств, голосовые ассистенты, решения для промышленности и транспорта.', c: CYAN },
+      { name: 'Сбер', desc: 'Экосистема SberDevices, платформы для анализа данных и автоматизации.', c: TEAL },
+      { name: 'Касперский', desc: 'Решения по кибербезопасности для IoT и промышленных систем.', c: MUTED },
+    ];
+    companies.forEach((co, i) => {
+      const cy = 1.95 + i * 1.55;
+      s.addShape('rect', { x: 8.7, y: cy, w: 4.4, h: 1.35, fill: { color: BG_ALT }, line: { color: BORDER, width: 0.5 }, rectRadius: 0.08 });
+      s.addShape('rect', { x: 8.7, y: cy, w: 0.06, h: 1.35, fill: { color: co.c } });
+      s.addText(co.name, { x: 8.9, y: cy + 0.1, w: 4.1, h: 0.3, fontSize: 11, bold: true, color: TEXT, fontFace: 'Calibri' });
+      s.addText(co.desc, { x: 8.9, y: cy + 0.42, w: 4.1, h: 0.8, fontSize: 9, color: MUTED, fontFace: 'Calibri', wrap: true, lineSpacingMultiple: 1.2 });
+    });
+
+    // Вывод
+    s.addShape('rect', { x: 0.35, y: 6.55, w: 12.65, h: 0.45, fill: { color: BG_BADGE }, line: { color: BORDER, width: 0.5 }, rectRadius: 0.07 });
+    s.addText('Рынок ИИ и IoT демонстрирует устойчивый рост. К 2030 году затраты на цифровизацию могут превысить триллионы рублей. Ключевые направления: автоматизация, e-commerce, телеком, промышленность.', {
+      x: 0.55, y: 6.58, w: 12.3, h: 0.38, fontSize: 9, color: MUTED, fontFace: 'Calibri', align: 'left',
+    });
+
+    addFooter(s, 7, TOTAL);
+  }
+
+  // ────────────────────────────────────────────────
+  // СЛАЙД 8 — Как использовать данные на практике
+  // ────────────────────────────────────────────────
+  {
+    const s = pptx.addSlide();
+    addSlideBackground(s, 'Как использовать данные на практике', '3 сценария применения анализа НИОКР, инноваций и прогноза ИИ/IoT');
+
+    const scenarios = [
+      {
+        title: 'Для бизнеса',
+        text: 'Использовать тренды роста НИОКР и инноваций для приоритизации инвестиций в цифровизацию, автоматизацию и внедрение ИИ-решений. Помогает выбирать направления, где рынок уже растёт и где можно быстрее получить эффект.',
+        color: CYAN,
+      },
+      {
+        title: 'Для стратегии и инвестиций',
+        text: 'Опираясь на прогноз рынка ИИ и IoT до 2030 года, оценивать долгосрочные точки роста, планировать бюджет и выбирать отрасли с наибольшим потенциалом — телеком, e-commerce, промышленность и сервисные платформы.',
+        color: TEAL,
+      },
+      {
+        title: 'Для презентации или отчёта',
+        text: 'Использовать ключевые цифры и графики как основу для слайда руководителю, публичного доклада или аналитической записки: рост затрат, цифровой приоритет, лидеры отраслей, прогноз на будущее.',
+        color: MUTED,
+      },
+    ];
+
+    const cw = 4.0, ch = 4.8, gap = 0.2, sx = 0.35;
+    scenarios.forEach((sc, i) => {
+      const bx = sx + i * (cw + gap);
+      s.addShape('rect', { x: bx, y: 1.3, w: cw, h: ch, fill: { color: BG_CARD }, line: { color: BORDER, width: 0.5 }, rectRadius: 0.1 });
+      s.addShape('rect', { x: bx, y: 1.3, w: cw, h: 0.07, fill: { color: sc.color }, rectRadius: 0.05 });
+      // Номер
+      s.addShape('ellipse', { x: bx + 0.2, y: 1.52, w: 0.45, h: 0.45, fill: { color: sc.color } });
+      s.addText(`${i + 1}`, { x: bx + 0.2, y: 1.54, w: 0.45, h: 0.38, fontSize: 13, bold: true, color: WHITE, fontFace: 'Calibri', align: 'center' });
+      s.addText(sc.title, { x: bx + 0.75, y: 1.57, w: cw - 0.95, h: 0.4, fontSize: 12, bold: true, color: TEXT, fontFace: 'Calibri' });
+      s.addShape('rect', { x: bx + 0.2, y: 2.1, w: cw - 0.4, h: 0.02, fill: { color: BORDER } });
+      s.addText(sc.text, {
+        x: bx + 0.2, y: 2.22, w: cw - 0.4, h: 3.6,
+        fontSize: 10, color: MUTED, fontFace: 'Calibri', wrap: true, lineSpacingMultiple: 1.35,
+      });
+    });
+
+    // Итоговый вывод
+    s.addShape('rect', { x: 0.35, y: 6.35, w: 12.65, h: 0.6, fill: { color: BG_BADGE }, line: { color: BORDER, width: 0.5 }, rectRadius: 0.08 });
+    s.addText('Анализ показывает не только текущее состояние цифрового развития, но и помогает принимать решения о том, куда направлять ресурсы, какие технологии внедрять и какие рынки считать приоритетными.', {
+      x: 0.55, y: 6.38, w: 12.3, h: 0.5, fontSize: 9.5, color: MUTED, fontFace: 'Calibri', align: 'left', wrap: true,
+    });
+
+    addFooter(s, 8, TOTAL);
+  }
+
+  // ────────────────────────────────────────────────
+  // СЛАЙД 9 — Источники и ограничения методики
+  // ────────────────────────────────────────────────
+  {
+    const s = pptx.addSlide();
+    addSlideBackground(s, 'Источники и ограничения методики', 'Как формировались результаты исследования');
+
+    const bullets = [
+      'Источник данных — Росстат.',
+      'Для анализа и подготовки текста использовались Perplexity, ГигаЧат, poehali и другие LLM-сервисы.',
+      'Часть платформ имеет ограничения по объёму контекста, из-за чего большие наборы данных приходится делить на части.',
+      'Некоторые сервисы не отдают готовый файл презентации напрямую и используют промежуточные форматы, например base64.',
+      'Визуализация данных в ИИ-сервисах требует проверки: подписи, оси и текст на графиках могут быть неточными.',
+    ];
+
+    s.addShape('rect', { x: 0.35, y: 1.3, w: 12.65, h: 5.55, fill: { color: BG_CARD }, line: { color: BORDER, width: 0.5 }, rectRadius: 0.1 });
+    s.addShape('rect', { x: 0.35, y: 1.3, w: 0.07, h: 5.55, fill: { color: MUTED } });
+
+    bullets.forEach((b, i) => {
+      const by = 1.65 + i * 0.95;
+      s.addShape('ellipse', { x: 0.65, y: by + 0.05, w: 0.18, h: 0.18, fill: { color: i === 0 ? CYAN : BORDER } });
+      s.addText(b, {
+        x: 1.0, y: by, w: 11.7, h: 0.8,
+        fontSize: 11, color: i === 0 ? TEXT : MUTED, bold: i === 0,
+        fontFace: 'Calibri', wrap: true, lineSpacingMultiple: 1.2,
+      });
+    });
+
+    addFooter(s, 9, TOTAL);
   }
 
   await pptx.writeFile({ fileName: 'Цифровые-технологии-Россия-2024.pptx' });

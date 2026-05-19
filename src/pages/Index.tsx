@@ -22,12 +22,72 @@ const niokrData = [
 ];
 
 const slides = [
-  { num: 1, title: 'Титульный',      desc: 'Обзор 2022–2024' },
-  { num: 2, title: 'KPI-показатели', desc: 'Ключевые цифры' },
-  { num: 3, title: 'Динамика НИОКР', desc: 'Расходы по годам' },
-  { num: 4, title: 'Активность',     desc: 'Предприятия' },
-  { num: 5, title: 'Приоритеты',     desc: 'Сравнение направлений' },
-  { num: 6, title: 'ИИ & BigData',   desc: '256,1 млрд руб.' },
+  { num: 1,  title: 'Титульный',      desc: 'Обзор 2022–2024' },
+  { num: 2,  title: 'KPI-показатели', desc: 'Ключевые цифры' },
+  { num: 3,  title: 'Динамика НИОКР', desc: 'Расходы по годам' },
+  { num: 4,  title: 'Активность',     desc: 'Предприятия' },
+  { num: 5,  title: 'Приоритеты',     desc: 'Сравнение направлений' },
+  { num: 6,  title: 'ИИ & BigData',   desc: '256,1 млрд руб.' },
+  { num: 7,  title: 'Прогноз ИИ/IoT', desc: 'до 2030 года' },
+  { num: 8,  title: 'Применение',     desc: '3 сценария' },
+  { num: 9,  title: 'Источники',      desc: 'Методика' },
+];
+
+const forecastData = [
+  { year: '2025', value: 170.3 },
+  { year: '2026', value: 247 },
+  { year: '2027', value: 358 },
+  { year: '2030', value: 1000 },
+];
+
+const companiesData = [
+  {
+    name: 'Яндекс',
+    icon: 'Cpu',
+    color: '#0077A8',
+    desc: 'Платформы для умных устройств, голосовые ассистенты, решения для промышленности и транспорта.',
+  },
+  {
+    name: 'Сбер',
+    icon: 'Database',
+    color: '#007A6E',
+    desc: 'Экосистема SberDevices, платформы для анализа данных и автоматизации.',
+  },
+  {
+    name: 'Касперский',
+    icon: 'Shield',
+    color: '#5A6E82',
+    desc: 'Решения по кибербезопасности для IoT и промышленных систем.',
+  },
+];
+
+const scenariosData = [
+  {
+    icon: 'Briefcase',
+    title: 'Для бизнеса',
+    color: '#0077A8',
+    text: 'Использовать тренды роста НИОКР и инноваций для приоритизации инвестиций в цифровизацию, автоматизацию и внедрение ИИ-решений. Помогает выбирать направления, где рынок уже растёт.',
+  },
+  {
+    icon: 'TrendingUp',
+    title: 'Для стратегии и инвестиций',
+    color: '#007A6E',
+    text: 'Опираясь на прогноз рынка ИИ и IoT до 2030 года, оценивать долгосрочные точки роста, планировать бюджет и выбирать отрасли с наибольшим потенциалом — телеком, e-commerce, промышленность.',
+  },
+  {
+    icon: 'FileText',
+    title: 'Для презентации или отчёта',
+    color: '#5A6E82',
+    text: 'Использовать ключевые цифры и графики как основу для слайда руководителю, публичного доклада или аналитической записки: рост затрат, цифровой приоритет, лидеры отраслей, прогноз.',
+  },
+];
+
+const sourcesBullets = [
+  'Источник данных — Росстат.',
+  'Для анализа и подготовки текста использовались Perplexity, ГигаЧат, poehali и другие LLM-сервисы.',
+  'Часть платформ имеет ограничения по объёму контекста, из-за чего большие наборы данных приходится делить на части.',
+  'Некоторые сервисы не отдают готовый файл презентации напрямую и используют промежуточные форматы, например base64.',
+  'Визуализация данных в ИИ-сервисах требует проверки: подписи, оси и текст на графиках могут быть неточными.',
 ];
 
 const SOURCE = 'Российский статистический ежегодник. 2025';
@@ -130,7 +190,7 @@ export default function Index() {
         {/* ── КАРТОЧКИ СЛАЙДОВ ── */}
         <div style={{ marginBottom: 32 }}>
           <div style={{ fontSize: 11, color: C.muted, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 12 }}>
-            Структура презентации · 6 слайдов
+            Структура презентации · 9 слайдов
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             {slides.map(sl => (
@@ -393,6 +453,145 @@ export default function Index() {
                 <span style={{ fontSize: 10, fontWeight: 700, color: C.teal }}>AI & BigData</span>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* ── ПРОГНОЗ ИИ/IoT ── */}
+        <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '24px 26px', marginBottom: 14, boxShadow: '0 2px 8px rgba(0,80,140,0.07)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
+            <div>
+              <div style={{ fontSize: 10, color: C.cyan, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 4 }}>Прогноз · 2025–2030</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: C.text }}>Рынок ИИ и IoT в России: прогноз роста до 2030 года</div>
+              <div style={{ fontSize: 11, color: C.muted, marginTop: 3, fontFamily: "'IBM Plex Sans', sans-serif" }}>Среднегодовой рост ~45% в 2025–2027 гг.</div>
+            </div>
+            <div style={{ background: C.badge, border: `1px solid ${C.border}`, borderRadius: 8, padding: '6px 14px', fontSize: 11, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif" }}>млрд руб.</div>
+          </div>
+
+          {/* Линейный график — точки и соединительные линии через SVG */}
+          {(() => {
+            const maxV = 1000;
+            const h = 160;
+            const w = 100;
+            const pts = forecastData.map((d, i) => ({
+              x: (i / (forecastData.length - 1)) * w,
+              y: h - (d.value / maxV) * h,
+              ...d,
+            }));
+            const polyline = pts.map(p => `${p.x}%,${p.y}px`).join(' ');
+            return (
+              <div style={{ position: 'relative' as const, height: h + 60, marginBottom: 16 }}>
+                <svg style={{ position: 'absolute' as const, top: 0, left: 0, width: '100%', height: h }} viewBox={`0 0 100 ${h}`} preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#0077A8" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#0077A8" stopOpacity="0.05" />
+                    </linearGradient>
+                  </defs>
+                  {/* Заливка под линией */}
+                  <polygon
+                    points={`0,${h} ${pts.map(p => `${p.x},${p.y}`).join(' ')} 100,${h}`}
+                    fill="url(#lineGrad)"
+                  />
+                  {/* Линия */}
+                  <polyline
+                    points={pts.map(p => `${p.x},${p.y}`).join(' ')}
+                    fill="none"
+                    stroke="#0077A8"
+                    strokeWidth="0.8"
+                    strokeLinejoin="round"
+                  />
+                  {/* Точки */}
+                  {pts.map((p, i) => (
+                    <circle key={i} cx={p.x} cy={p.y} r="1.8" fill={i === pts.length - 1 ? '#007A6E' : '#0077A8'} />
+                  ))}
+                </svg>
+                {/* Подписи значений */}
+                {pts.map((p, i) => (
+                  <div key={i} style={{
+                    position: 'absolute' as const,
+                    left: `calc(${p.x}% - 28px)`,
+                    top: p.y - 28,
+                    width: 56, textAlign: 'center' as const,
+                    fontSize: i === pts.length - 1 ? 12 : 10,
+                    fontWeight: i === pts.length - 1 ? 800 : 600,
+                    color: i === pts.length - 1 ? C.teal : C.text,
+                  }}>
+                    {i === pts.length - 1 ? '>1 000' : p.value}
+                  </div>
+                ))}
+                {/* Подписи годов */}
+                {pts.map((p, i) => (
+                  <div key={i} style={{
+                    position: 'absolute' as const,
+                    left: `calc(${p.x}% - 20px)`,
+                    top: h + 10, width: 40,
+                    textAlign: 'center' as const,
+                    fontSize: 10, fontWeight: 700,
+                    color: i === pts.length - 1 ? C.teal : C.muted,
+                  }}>
+                    {p.year}
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+
+          {/* Карточки компаний */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginBottom: 14 }}>
+            {companiesData.map((c, i) => (
+              <div key={i} style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, padding: '14px 16px', borderTop: `3px solid ${c.color}` }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                  <div style={{ background: C.badge, border: `1px solid ${C.border}`, borderRadius: 7, padding: 6 }}>
+                    <Icon name={c.icon} fallback="Star" size={15} style={{ color: c.color }} />
+                  </div>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: C.text }}>{c.name}</span>
+                </div>
+                <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.5, fontFamily: "'IBM Plex Sans', sans-serif" }}>{c.desc}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Вывод */}
+          <div style={{ padding: '12px 16px', background: C.badge, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 11, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif", lineHeight: 1.6 }}>
+            Рынок ИИ и IoT в России демонстрирует устойчивый рост: к 2030 году внутренние затраты на цифровизацию и внедрение новых технологий могут превысить <span style={{ fontWeight: 700, color: C.cyan }}>триллионы рублей</span>. Основные направления — автоматизация бизнес-процессов, развитие e-commerce, телекома и промышленности.
+          </div>
+        </div>
+
+        {/* ── ПРИМЕНЕНИЕ ДАННЫХ ── */}
+        <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '24px 26px', marginBottom: 14, boxShadow: '0 2px 8px rgba(0,80,140,0.07)' }}>
+          <div style={{ fontSize: 10, color: C.teal, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 4 }}>Практическое применение</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 4 }}>Как использовать данные на практике</div>
+          <div style={{ fontSize: 11, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif", marginBottom: 18 }}>3 сценария применения анализа НИОКР, инноваций и прогноза ИИ/IoT</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
+            {scenariosData.map((s, i) => (
+              <div key={i} style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: 10, padding: '18px 16px', borderTop: `3px solid ${s.color}` }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                  <div style={{ background: C.badge, border: `1px solid ${C.border}`, borderRadius: 7, padding: 6 }}>
+                    <Icon name={s.icon} fallback="Star" size={16} style={{ color: s.color }} />
+                  </div>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: C.text }}>{s.title}</span>
+                </div>
+                <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.55, fontFamily: "'IBM Plex Sans', sans-serif" }}>{s.text}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 14, padding: '10px 16px', background: C.bgAlt, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 11, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif", lineHeight: 1.5 }}>
+            Анализ показывает не только текущее состояние цифрового развития, но и помогает принимать решения о том, куда направлять ресурсы, какие технологии внедрять и какие рынки считать приоритетными.
+          </div>
+        </div>
+
+        {/* ── ИСТОЧНИКИ И ОГРАНИЧЕНИЯ ── */}
+        <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '24px 26px', marginBottom: 14, boxShadow: '0 2px 8px rgba(0,80,140,0.07)' }}>
+          <div style={{ fontSize: 10, color: C.muted, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 4 }}>Методология</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 4 }}>Источники и ограничения методики</div>
+          <div style={{ fontSize: 11, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif", marginBottom: 18 }}>Как формировались результаты исследования</div>
+          <div style={{ display: 'flex', flexDirection: 'column' as const, gap: 10 }}>
+            {sourcesBullets.map((b, i) => (
+              <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: C.border, marginTop: 5, flexShrink: 0 }} />
+                <div style={{ fontSize: 12, color: C.text, lineHeight: 1.55, fontFamily: "'IBM Plex Sans', sans-serif" }}>{b}</div>
+              </div>
+            ))}
           </div>
         </div>
 
