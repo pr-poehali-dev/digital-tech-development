@@ -1,5 +1,7 @@
 import PptxGenJS from 'pptxgenjs';
 
+const SOURCE_TEXT = 'Источник: Российский статистический ежегодник. 2025';
+
 const DARK_BG = '0D2137';
 const MID_BG  = '0F2B47';
 const CARD_BG = '132F52';
@@ -33,7 +35,7 @@ function addSlideBackground(slide: PptxGenJS.Slide, title: string, subtitle: str
 
 function addFooter(slide: PptxGenJS.Slide, slideNum: number, total: number) {
   slide.addShape('rect', { x: 0, y: 7.1, w: '100%', h: 0.4, fill: { color: MID_BG } });
-  slide.addText('Источник: официальная статистика Российской Федерации', {
+  slide.addText(SOURCE_TEXT, {
     x: 0.3, y: 7.12, w: 7, h: 0.3,
     fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'left',
   });
@@ -124,7 +126,7 @@ export async function generatePresentation(): Promise<void> {
     });
 
     s.addShape('rect', { x: 0, y: 7.1, w: '100%', h: 0.4, fill: { color: MID_BG } });
-    s.addText('Источник: официальная статистика Российской Федерации', {
+    s.addText(SOURCE_TEXT, {
       x: 0.3, y: 7.12, w: 9, h: 0.3, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'left',
     });
     s.addText('1 / 5', { x: 9.3, y: 7.12, w: 0.6, h: 0.3, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'right' });
@@ -385,7 +387,7 @@ export async function generatePresentation(): Promise<void> {
     });
 
     s.addShape('rect', { x: 0, y: 7.1, w: '100%', h: 0.4, fill: { color: '0A2035' } });
-    s.addText('Источник: официальная статистика Российской Федерации', {
+    s.addText(SOURCE_TEXT, {
       x: 0.3, y: 7.12, w: 9, h: 0.3, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'left',
     });
     s.addText('5 / 5', { x: 9.3, y: 7.12, w: 0.6, h: 0.3, fontSize: 8, color: MUTED, fontFace: 'Calibri', align: 'right' });

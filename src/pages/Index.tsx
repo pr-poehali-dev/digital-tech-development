@@ -22,24 +22,30 @@ const niokrData = [
 ];
 
 const slides = [
-  { num: 1, title: 'Титульный',       desc: 'Обзор 2022–2024' },
-  { num: 2, title: 'KPI-показатели',  desc: 'Ключевые цифры' },
-  { num: 3, title: 'Динамика НИОКР',  desc: 'Расходы по годам' },
-  { num: 4, title: 'Активность',      desc: 'Предприятия' },
-  { num: 5, title: 'ИИ & BigData',    desc: '256,1 млрд руб.' },
+  { num: 1, title: 'Титульный',      desc: 'Обзор 2022–2024' },
+  { num: 2, title: 'KPI-показатели', desc: 'Ключевые цифры' },
+  { num: 3, title: 'Динамика НИОКР', desc: 'Расходы по годам' },
+  { num: 4, title: 'Активность',     desc: 'Предприятия' },
+  { num: 5, title: 'ИИ & BigData',   desc: '256,1 млрд руб.' },
 ];
 
-// ── Цветовая палитра (осветлённая)
+const SOURCE = 'Российский статистический ежегодник. 2025';
+
+// ── Светлая палитра
 const C = {
-  bg:       '#132840',   // основной фон — заметно светлее
-  bgCard:   '#1C3A5A',   // карточки
-  bgAlt:    '#1A3350',   // альтернативный
-  border:   '#1E4A70',
-  cyan:     '#00C9EE',
-  teal:     '#00D9BE',
-  white:    '#ffffff',
-  muted:    '#8BBDD9',
-  accent:   '#00C9EE',
+  bg:        '#EEF4FA',  // страница — очень светлый голубой
+  bgCard:    '#FFFFFF',  // карточки — белые
+  bgAlt:     '#E0ECF7',  // чуть темнее белого для градиентов
+  bgSection: '#F5F9FD',  // секции
+  border:    '#C2D8EC',
+  borderDark:'#A0BDD4',
+  cyan:      '#0077A8',  // акцентный синий
+  teal:      '#007A6E',  // акцентный бирюзовый
+  text:      '#0F2438',  // основной текст
+  muted:     '#4A6B82',  // второстепенный текст
+  barTrack:  '#D4E6F4',  // фон прогресс-баров
+  badge:     '#E6F5FA',  // фон бейджей
+  badgeTeal: '#E0F5F2',
 };
 
 export default function Index() {
@@ -59,28 +65,28 @@ export default function Index() {
   }
 
   return (
-    <div style={{ fontFamily: "'Montserrat', sans-serif", background: C.bg, minHeight: '100vh', color: C.white }}>
-      {/* Фоновый градиент */}
+    <div style={{ fontFamily: "'Montserrat', sans-serif", background: C.bg, minHeight: '100vh', color: C.text }}>
+      {/* Лёгкий декоративный градиент */}
       <div style={{
         position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0,
-        backgroundImage: 'radial-gradient(ellipse at 15% 5%, rgba(0,180,220,0.10) 0%, transparent 55%), radial-gradient(ellipse at 85% 85%, rgba(0,210,190,0.07) 0%, transparent 55%)',
+        backgroundImage: 'radial-gradient(ellipse at 10% 0%, rgba(0,150,200,0.07) 0%, transparent 50%), radial-gradient(ellipse at 90% 100%, rgba(0,160,140,0.05) 0%, transparent 50%)',
       }} />
 
       <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto', padding: '44px 36px' }}>
 
         {/* ── ШАПКА ── */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 44 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 40 }}>
           <div style={{ borderLeft: `4px solid ${C.cyan}`, paddingLeft: 20 }}>
             <div style={{
               display: 'inline-block',
-              background: 'rgba(0,200,230,0.12)',
-              border: `1px solid rgba(0,200,230,0.28)`,
+              background: C.badge,
+              border: `1px solid ${C.border}`,
               borderRadius: 6, padding: '3px 11px', fontSize: 10, fontWeight: 700,
               letterSpacing: '0.12em', color: C.cyan, textTransform: 'uppercase' as const, marginBottom: 8,
             }}>
               Аналитический обзор · 2022–2024
             </div>
-            <h1 style={{ fontSize: 'clamp(20px,3vw,34px)', fontWeight: 800, lineHeight: 1.2, margin: '0 0 4px', letterSpacing: '-0.02em' }}>
+            <h1 style={{ fontSize: 'clamp(20px,3vw,34px)', fontWeight: 800, lineHeight: 1.2, margin: '0 0 5px', letterSpacing: '-0.02em', color: C.text }}>
               Развитие цифровых технологий в России
             </h1>
             <p style={{ fontSize: 13, color: C.muted, margin: 0, fontFamily: "'IBM Plex Sans', sans-serif" }}>
@@ -95,12 +101,12 @@ export default function Index() {
             style={{
               display: 'flex', alignItems: 'center', gap: 9,
               background: done
-                ? 'linear-gradient(135deg,#00A896,#00D9BE)'
-                : 'linear-gradient(135deg,#0077A8,#00C9EE)',
+                ? 'linear-gradient(135deg,#007A6E,#009F8F)'
+                : `linear-gradient(135deg,${C.cyan},#009DC8)`,
               border: 'none', borderRadius: 10, padding: '12px 22px',
               color: '#fff', fontFamily: "'Montserrat', sans-serif", fontSize: 13, fontWeight: 700,
               cursor: loading ? 'wait' : 'pointer',
-              boxShadow: '0 4px 20px rgba(0,200,230,0.25)',
+              boxShadow: '0 4px 18px rgba(0,119,168,0.28)',
               transition: 'transform 0.15s, box-shadow 0.15s',
               flexShrink: 0,
             }}
@@ -113,22 +119,24 @@ export default function Index() {
           </button>
         </div>
 
-        {/* ── КАРТОЧКИ СЛАЙДОВ (предпросмотр) ── */}
-        <div style={{ marginBottom: 36 }}>
+        {/* ── КАРТОЧКИ СЛАЙДОВ ── */}
+        <div style={{ marginBottom: 32 }}>
           <div style={{ fontSize: 11, color: C.muted, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 12 }}>
             Структура презентации · 5 слайдов
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             {slides.map(sl => (
               <div key={sl.num} style={{
-                flex: 1, background: C.bgCard, border: `1px solid ${C.border}`,
-                borderRadius: 10, padding: '14px 14px 12px',
+                flex: 1, background: C.bgCard,
+                border: `1px solid ${C.border}`,
                 borderTop: `3px solid ${sl.num % 2 === 0 ? C.cyan : C.teal}`,
+                borderRadius: 10, padding: '14px 14px 12px',
+                boxShadow: '0 1px 4px rgba(0,80,140,0.06)',
               }}>
                 <div style={{ fontSize: 10, color: sl.num % 2 === 0 ? C.cyan : C.teal, fontWeight: 700, marginBottom: 4 }}>
                   Слайд {sl.num}
                 </div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.white, marginBottom: 2 }}>{sl.title}</div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.text, marginBottom: 2 }}>{sl.title}</div>
                 <div style={{ fontSize: 10, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif" }}>{sl.desc}</div>
               </div>
             ))}
@@ -136,33 +144,35 @@ export default function Index() {
         </div>
 
         {/* ── KPI-КАРТОЧКИ ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: 14, marginBottom: 28 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(230px,1fr))', gap: 14, marginBottom: 24 }}>
           {kpiData.map((kpi, i) => (
             <div key={i} style={{
-              background: `linear-gradient(145deg, ${C.bgCard}, ${C.bgAlt})`,
-              border: `1px solid ${C.border}`, borderRadius: 12, padding: '22px 18px',
+              background: C.bgCard,
+              border: `1px solid ${C.border}`,
+              borderRadius: 12, padding: '22px 18px',
               position: 'relative' as const, overflow: 'hidden',
+              boxShadow: '0 2px 8px rgba(0,80,140,0.07)',
             }}>
               <div style={{
                 position: 'absolute' as const, top: 0, left: 0, right: 0, height: 3,
                 background: i % 2 === 0
-                  ? `linear-gradient(90deg,${C.cyan},#0099BB)`
-                  : `linear-gradient(90deg,${C.teal},#009A8A)`,
+                  ? `linear-gradient(90deg,${C.cyan},#009DC8)`
+                  : `linear-gradient(90deg,${C.teal},#009F8F)`,
               }} />
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
-                <div style={{ background: 'rgba(0,200,230,0.13)', borderRadius: 8, padding: 7 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                <div style={{ background: C.badge, border: `1px solid ${C.border}`, borderRadius: 8, padding: 7 }}>
                   <Icon name={kpi.icon} fallback="TrendingUp" size={17} style={{ color: C.cyan }} />
                 </div>
                 <span style={{
-                  background: kpi.growth === '→' ? 'rgba(255,255,255,0.07)' : 'rgba(0,220,190,0.14)',
-                  border: `1px solid ${kpi.growth === '→' ? 'rgba(255,255,255,0.1)' : 'rgba(0,220,190,0.28)'}`,
+                  background: kpi.growth === '→' ? C.bgAlt : C.badgeTeal,
+                  border: `1px solid ${kpi.growth === '→' ? C.border : '#B2DDD8'}`,
                   borderRadius: 20, padding: '2px 9px', fontSize: 11, fontWeight: 700,
                   color: kpi.growth === '→' ? C.muted : C.teal,
                 }}>
                   {kpi.growth}
                 </span>
               </div>
-              <div style={{ fontSize: 'clamp(22px,2.8vw,30px)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.02em' }}>
+              <div style={{ fontSize: 'clamp(22px,2.8vw,30px)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.02em', color: C.text }}>
                 {kpi.value}
               </div>
               <div style={{ fontSize: 11, color: C.cyan, fontWeight: 600, marginTop: 2, marginBottom: 7 }}>{kpi.unit}</div>
@@ -175,39 +185,50 @@ export default function Index() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 14 }}>
 
           {/* График НИОКР */}
-          <div style={{ background: `linear-gradient(145deg,${C.bgCard},${C.bgAlt})`, border: `1px solid ${C.border}`, borderRadius: 12, padding: 22 }}>
+          <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: 22, boxShadow: '0 2px 8px rgba(0,80,140,0.07)' }}>
             <div style={{ fontSize: 10, color: C.cyan, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 4 }}>Динамика расходов</div>
-            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 18 }}>НИОКР и инновационная деятельность</div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 18 }}>НИОКР и инновационная деятельность</div>
 
             {niokrData.map((row, i) => (
               <div key={i} style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', marginBottom: 5 }}>{row.year}</div>
-                <div style={{ marginBottom: 5 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: i === 2 ? C.cyan : C.muted, marginBottom: 5 }}>{row.year}</div>
+                <div style={{ marginBottom: 6 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
                     <span style={{ fontSize: 9, color: C.muted }}>Инновации</span>
                     <span style={{ fontSize: 9, fontWeight: 700, color: C.cyan }}>{row.innov.toLocaleString('ru')} млрд ₽</span>
                   </div>
-                  <div style={{ background: 'rgba(255,255,255,0.07)', borderRadius: 4, height: 7 }}>
-                    <div style={{ height: '100%', width: `${(row.innov / 4524.1) * 100}%`, background: `linear-gradient(90deg,#0077B6,${C.cyan})`, borderRadius: 4 }} />
+                  <div style={{ background: C.barTrack, borderRadius: 4, height: 8 }}>
+                    <div style={{ height: '100%', width: `${(row.innov / 4524.1) * 100}%`, background: `linear-gradient(90deg,${C.cyan},#009DC8)`, borderRadius: 4 }} />
                   </div>
                 </div>
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
                     <span style={{ fontSize: 9, color: C.muted }}>НИОКР</span>
                     <span style={{ fontSize: 9, fontWeight: 700, color: C.teal }}>{row.niokr.toLocaleString('ru')} млрд ₽</span>
                   </div>
-                  <div style={{ background: 'rgba(255,255,255,0.07)', borderRadius: 4, height: 7 }}>
-                    <div style={{ height: '100%', width: `${(row.niokr / 1884.9) * 100}%`, background: `linear-gradient(90deg,#00A896,${C.teal})`, borderRadius: 4 }} />
+                  <div style={{ background: C.barTrack, borderRadius: 4, height: 8 }}>
+                    <div style={{ height: '100%', width: `${(row.niokr / 1884.9) * 100}%`, background: `linear-gradient(90deg,${C.teal},#009F8F)`, borderRadius: 4 }} />
                   </div>
                 </div>
               </div>
             ))}
+
+            <div style={{ display: 'flex', gap: 14, marginTop: 6 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                <div style={{ width: 18, height: 4, background: `linear-gradient(90deg,${C.cyan},#009DC8)`, borderRadius: 2 }} />
+                <span style={{ fontSize: 9, color: C.muted }}>Инновации</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                <div style={{ width: 18, height: 4, background: `linear-gradient(90deg,${C.teal},#009F8F)`, borderRadius: 2 }} />
+                <span style={{ fontSize: 9, color: C.muted }}>НИОКР</span>
+              </div>
+            </div>
           </div>
 
           {/* Инновационная активность */}
-          <div style={{ background: `linear-gradient(145deg,${C.bgCard},${C.bgAlt})`, border: `1px solid ${C.border}`, borderRadius: 12, padding: 22 }}>
+          <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: 22, boxShadow: '0 2px 8px rgba(0,80,140,0.07)' }}>
             <div style={{ fontSize: 10, color: C.cyan, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 4 }}>Сравнительный блок</div>
-            <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 18 }}>Инновационная активность предприятий</div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: C.text, marginBottom: 18 }}>Инновационная активность предприятий</div>
 
             {innovationActivity.map((row, i) => {
               const isLast = i === 2;
@@ -217,19 +238,19 @@ export default function Index() {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
                       <span style={{ fontSize: 9, color: C.muted }}>Общая</span>
-                      <span style={{ fontSize: 10, fontWeight: 800, color: isLast ? C.white : C.muted }}>{row.overall}%</span>
+                      <span style={{ fontSize: 10, fontWeight: 800, color: isLast ? C.text : C.muted }}>{row.overall}%</span>
                     </div>
-                    <div style={{ background: 'rgba(255,255,255,0.07)', borderRadius: 4, height: 9 }}>
-                      <div style={{ height: '100%', width: `${(row.overall / 15) * 100}%`, background: isLast ? `linear-gradient(90deg,#0077B6,${C.cyan})` : 'rgba(0,120,180,0.4)', borderRadius: 4 }} />
+                    <div style={{ background: C.barTrack, borderRadius: 4, height: 9 }}>
+                      <div style={{ height: '100%', width: `${(row.overall / 15) * 100}%`, background: isLast ? `linear-gradient(90deg,${C.cyan},#009DC8)` : '#B8D4E8', borderRadius: 4 }} />
                     </div>
                   </div>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
                       <span style={{ fontSize: 9, color: C.muted }}>Технол.</span>
-                      <span style={{ fontSize: 10, fontWeight: 800, color: isLast ? C.white : C.muted }}>{row.tech}%</span>
+                      <span style={{ fontSize: 10, fontWeight: 800, color: isLast ? C.text : C.muted }}>{row.tech}%</span>
                     </div>
-                    <div style={{ background: 'rgba(255,255,255,0.07)', borderRadius: 4, height: 9 }}>
-                      <div style={{ height: '100%', width: `${(row.tech / 30) * 100}%`, background: isLast ? `linear-gradient(90deg,#00A896,${C.teal})` : 'rgba(0,160,140,0.35)', borderRadius: 4 }} />
+                    <div style={{ background: C.barTrack, borderRadius: 4, height: 9 }}>
+                      <div style={{ height: '100%', width: `${(row.tech / 30) * 100}%`, background: isLast ? `linear-gradient(90deg,${C.teal},#009F8F)` : '#B2D8D4', borderRadius: 4 }} />
                     </div>
                   </div>
                 </div>
@@ -238,7 +259,7 @@ export default function Index() {
 
             <div style={{
               marginTop: 10, padding: '10px 14px',
-              background: 'rgba(0,200,230,0.07)', border: `1px solid rgba(0,200,230,0.2)`, borderRadius: 8,
+              background: C.badge, border: `1px solid ${C.border}`, borderRadius: 8,
               display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             }}>
               <span style={{ fontSize: 10, color: C.muted }}>Рост 2022→2024</span>
@@ -258,13 +279,18 @@ export default function Index() {
 
         {/* ── АКЦЕНТНЫЙ БЛОК ── */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(0,70,120,0.75) 0%, rgba(0,110,150,0.55) 50%, rgba(0,180,160,0.25) 100%)',
-          border: `1px solid rgba(0,200,230,0.32)`, borderRadius: 12, padding: '26px 30px',
+          background: `linear-gradient(135deg, ${C.badge} 0%, #D8EEF8 50%, #D4F0EC 100%)`,
+          border: `1px solid ${C.borderDark}`,
+          borderLeft: `4px solid ${C.cyan}`,
+          borderRadius: 12, padding: '26px 30px',
           position: 'relative' as const, overflow: 'hidden',
+          boxShadow: '0 2px 12px rgba(0,80,140,0.09)',
         }}>
-          <div style={{ position: 'absolute' as const, right: -30, top: -30, width: 180, height: 180, background: 'radial-gradient(circle,rgba(0,200,230,0.14) 0%,transparent 70%)', borderRadius: '50%', pointerEvents: 'none' as const }} />
           <div style={{ position: 'relative' as const, display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: 28, alignItems: 'center' }}>
-            <div style={{ background: 'rgba(0,200,230,0.14)', border: `1px solid rgba(0,200,230,0.38)`, borderRadius: 14, padding: 18, display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: 7 }}>
+            <div style={{
+              background: C.badge, border: `1px solid ${C.border}`,
+              borderRadius: 14, padding: 18, display: 'flex', flexDirection: 'column' as const, alignItems: 'center', gap: 7,
+            }}>
               <Icon name="Cpu" size={30} style={{ color: C.cyan }} />
               <span style={{ fontSize: 8, color: C.muted, letterSpacing: '0.1em', textTransform: 'uppercase' as const, textAlign: 'center' as const, lineHeight: 1.3 }}>
                 Цифровой<br/>приоритет
@@ -274,7 +300,7 @@ export default function Index() {
               <div style={{ fontSize: 10, color: C.teal, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' as const, marginBottom: 6 }}>
                 Приоритетное направление · 2024
               </div>
-              <div style={{ fontSize: 15, fontWeight: 800, lineHeight: 1.3, marginBottom: 7 }}>
+              <div style={{ fontSize: 15, fontWeight: 800, color: C.text, lineHeight: 1.3, marginBottom: 7 }}>
                 Передовые цифровые и интеллектуальные производственные технологии,<br/>обработка больших данных, машинное обучение и ИИ
               </div>
               <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.5, fontFamily: "'IBM Plex Sans', sans-serif" }}>
@@ -282,10 +308,10 @@ export default function Index() {
               </div>
             </div>
             <div style={{ textAlign: 'right' as const, minWidth: 150 }}>
-              <div style={{ fontSize: 'clamp(30px,3.8vw,46px)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em' }}>256,1</div>
+              <div style={{ fontSize: 'clamp(30px,3.8vw,46px)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em', color: C.text }}>256,1</div>
               <div style={{ fontSize: 14, color: C.cyan, fontWeight: 700, marginTop: 4 }}>млрд руб.</div>
               <div style={{ fontSize: 10, color: C.muted, marginTop: 4 }}>Объём сектора · 2024</div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, marginTop: 9, background: 'rgba(0,220,190,0.14)', border: `1px solid rgba(0,220,190,0.32)`, borderRadius: 20, padding: '3px 11px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, marginTop: 9, background: C.badgeTeal, border: `1px solid #B2DDD8`, borderRadius: 20, padding: '3px 11px' }}>
                 <Icon name="Sparkles" size={11} style={{ color: C.teal }} />
                 <span style={{ fontSize: 10, fontWeight: 700, color: C.teal }}>AI & BigData</span>
               </div>
@@ -294,13 +320,13 @@ export default function Index() {
         </div>
 
         {/* ── ФУТЕР ── */}
-        <div style={{ marginTop: 28, paddingTop: 14, borderTop: `1px solid rgba(255,255,255,0.08)`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.22)', fontFamily: "'IBM Plex Sans', sans-serif", letterSpacing: '0.05em' }}>
-            Источник: официальная статистика Российской Федерации
+        <div style={{ marginTop: 26, paddingTop: 14, borderTop: `1px solid ${C.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ fontSize: 10, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif", letterSpacing: '0.04em' }}>
+            Источник: {SOURCE}
           </span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-            <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'rgba(0,200,230,0.45)' }} />
-            <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.22)', fontFamily: "'IBM Plex Sans', sans-serif" }}>2022 · 2023 · 2024</span>
+            <div style={{ width: 4, height: 4, borderRadius: '50%', background: C.border }} />
+            <span style={{ fontSize: 10, color: C.muted, fontFamily: "'IBM Plex Sans', sans-serif" }}>2022 · 2023 · 2024</span>
           </div>
         </div>
 
